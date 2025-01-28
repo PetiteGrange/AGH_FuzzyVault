@@ -10,8 +10,7 @@ def generate_polynomial(secret: str):
     if not secret:
         raise ValueError("The secret cannot be empty")
     
-    
-    #TODO split string
+    #TODO: rework the secret system
     secret_words = secret.split(" ")
     print("Secret parts: ", secret_words)
 
@@ -32,3 +31,11 @@ def generate_polynomial(secret: str):
 
     return coefficients
             
+
+def generate_genuine_points(coefficients, features: str):
+    genuine_points = []
+    for x in features:
+        # Evaluate the polynomial at x
+        y = sum(c * (x ** i) for i, c in enumerate(coefficients))  # P(x) = c0 + c1*x + c2*x^2 + ...
+        genuine_points.append((x, y))
+    return genuine_points
