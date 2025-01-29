@@ -4,11 +4,7 @@ from src.polynomial import *
 from src.points import *
 import json
 
-def create_vault(vault_name, secret=None, length=20):
-
-    # Make sure that the folder vaults exists
-    if not os.path.exists('vaults'):
-        os.makedirs('vaults')    
+def create_vault(vault_name, secret=None, length=20):  
 
     # Generate the secret
     if secret: secret_to_store = secret
@@ -44,6 +40,14 @@ def create_vault(vault_name, secret=None, length=20):
     random.shuffle(vault)
 
     print("Total number of points: ", len(vault))
+
+    # Make sure that the folder vaults/ exists
+    if not os.path.exists('vaults'):
+        os.makedirs('vaults')  
+
+    # Make sure that the folder features/ exists
+    if not os.path.exists('features'):
+        os.makedirs('features')  
 
     # Saving the vault in vault/
     vault_path = os.path.join('vaults', vault_name)
