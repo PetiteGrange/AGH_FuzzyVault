@@ -1,8 +1,6 @@
 import random
 import hashlib
 import string
-import nltk
-from nltk.corpus import words
 from src import *
 
 def hash_word_to_number(word, mod=1000):
@@ -79,10 +77,10 @@ def generate_features(degree):
         [str]: the features
     
     """
-    word_list = words.words()
+    with open('wordlist.txt', 'r') as file:
+        word_list = [line[6:].strip() for line in file if len(line) > 6]
     
     # Select `degree` number of random words
     selected_words = random.sample(word_list, degree)
-    print (selected_words)
     
     return selected_words
