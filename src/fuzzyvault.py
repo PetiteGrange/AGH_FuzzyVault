@@ -37,3 +37,20 @@ def decode_vault(vault_name):
         secret = f.read().strip()
     
     print(f"Decoded secret from vault '{vault_name}': {secret}")
+
+        
+
+def list_vaults():
+
+    # Make sure that the folder vaults exists
+    if not os.path.exists('vaults'):
+        os.makedirs('vaults')
+
+    vault_files = [f for f in os.listdir('vaults') if os.path.isfile(os.path.join('vaults', f))]
+    
+    if vault_files:
+        print("Vaults in 'vaults/' directory:")
+        for vault in vault_files:
+            print(vault)
+    else:
+        print("No vaults found in 'vaults/'.")
