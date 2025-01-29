@@ -4,6 +4,7 @@ import textwrap
 from nltk.corpus import words
 import os
 from src.polynomial import *
+from src.points import *
 
 
 
@@ -21,10 +22,21 @@ def create_vault(vault_name, secret=None, length=20):
     else: secret_to_store = generate_secret(length)
 
     # Generate the polynomials coefficients
-    degree = calculate_polynomial_degree(len(secret))
-    coefficients = generate_polynomial(secret, degree)
+    degree = calculate_polynomial_degree(len(secret)) # degree of the polynomial
+    coefficients = generate_polynomial(secret, degree) #list of coefficients from 0 to last
 
-    #TODO: generate features
+    print("Coefficients: ", coefficients)
+    print("Degree: ", degree)
+
+    # Generation of the features
+    features = generate_features(degree)
+
+    print("Features: ", features)
+
+    # Generation of the genuine points
+    genuine_points = generate_genuine_points(coefficients, features)
+
+    print("Genuine points: ", genuine_points)
 
     with open(vault_path, 'w') as f:
         f.write(secret_to_store)
