@@ -1,0 +1,4 @@
+numpy
+hashlib
+random
+nltk
