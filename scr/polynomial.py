@@ -36,7 +36,7 @@ def generate_genuine_points(coefficients, features: str):
     genuine_points = []
     for x in features:
         # Evaluate the polynomial at x
-        y = sum(c * (x ** i) for i, c in enumerate(coefficients))  # P(x) = c0 + c1*x + c2*x^2 + ...
+        y = sum(coef * (x ** i) for i, coef in enumerate(coefficients))
         genuine_points.append((x, y))
     return genuine_points
 
