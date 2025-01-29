@@ -77,7 +77,15 @@ def retrieve_features():
         word = input(f"Please enter the word {i+1} from your features (or press Enter to stop): ")
         if not word:
             break
-        hashed_word = hash_word(word)
-        features.append(hashed_word)
+        features.append(word)
     
     return features
+
+def split_features(features):
+
+    # Merge all strings in features
+    merged_features = ''.join(features)
+    # Calculate the split size
+    split_size = len(merged_features) // (2 * len(features))
+    # Split the merged string into a list of strings
+    return [merged_features[i:i + split_size] for i in range(0, len(merged_features), split_size)]

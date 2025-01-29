@@ -2,7 +2,7 @@ import random
 from src.utils import *
 
 
-def generate_genuine_points(coefficients: int, features: str, points: int = 20):
+def generate_genuine_points(coefficients: int, features: str):
     """
     Generates genuine points
     
@@ -12,14 +12,26 @@ def generate_genuine_points(coefficients: int, features: str, points: int = 20):
 
     genuine_points = []
 
-    for i in range(points):
+    # Generate more strings from the features
+    splited_features = split_features(features)
+
+    # Merge features and splited features to add more points
+    features_redundancy = features + splited_features
+
+    print(features_redundancy)
+
+    for feature in features_redundancy:
         # Hash the word to get a feature value (x-coordinate)
-        word = features[i % len(features)]  # Use modulo to cycle through words
-        x = hash_word(word)
+        x = hash_word(feature)
 
-        y = sum(coefficient * (x ** idx) for idx, coefficient in enumerate(coefficients))
+        if x not in [point[0] for point in genuine_points]:
 
-        genuine_points.append([x, y])
+            y = sum(coefficient * (x ** idx) for idx, coefficient in enumerate(coefficients))
+
+            genuine_points.append([x, y])
+
+        else: print("already present")
+
 
     return genuine_points
 
@@ -39,6 +51,22 @@ def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int =
     return chaff_points
 
 
-def retrieve_genuine_points(vault: int, genuine_x: int):
-    genuine_points = [point for point in vault if point[0] in genuine_x]
+def retrieve_genuine_points(vault: int, features: string):
+
+    points_x = []
+
+    splited_features = split_features(features)
+
+    features_redundancy = splited_features + features
+
+    print(features_redundancy)
+
+    for feature in features_redundancy:
+        # Hash the word to get a feature value (x-coordinate)
+        x = hash_word(feature)
+        
+        points_x.append(x)
+
+
+    genuine_points = [point for point in vault if point[0] in points_x]
     return genuine_points

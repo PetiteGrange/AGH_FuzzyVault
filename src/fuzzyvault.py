@@ -32,12 +32,12 @@ def create_vault(vault_name, secret=None, length=20):
 
     # Generation of the genuine points
     #TODO: add dynamic points numbers
-    genuine_points = generate_genuine_points(coefficients, features, degree*2)
+    genuine_points = generate_genuine_points(coefficients, features)
 
     genuine_x = [point[0] for point in genuine_points]
 
     # Generation of the chaff points
-    chaff_points = generate_chaff_points(genuine_x, degree, degree*20)
+    chaff_points = generate_chaff_points(genuine_x, degree, 30*len(features))
 
     vault = genuine_points + chaff_points
     random.shuffle(vault)
