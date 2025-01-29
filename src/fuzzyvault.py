@@ -1,5 +1,4 @@
 from src.utils import *
-from nltk.corpus import words
 import os
 from src.polynomial import *
 from src.points import *

@@ -1,4 +1,6 @@
 numpy
 hashlib
 random
-nltk
+string
+os
+json
