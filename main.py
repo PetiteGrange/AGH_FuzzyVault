@@ -24,14 +24,15 @@ def main():
         if not args.vault:
             print("You must specify a vault name with --vault when creating a new vault.")
         else:
-            create_vault(args.vault, length=args.length, secret=args.secret, verbose=args.verbose)
+            create_vault(args.vault, length=args.length, secret=args.secret)
     elif args.decode:
         if not args.vault:
             print("You must specify a vault name with --vault when decoding a vault.")
         else:
-            decode_vault(args.vault, verbose=args.verbose)
+            decode_vault(args.vault)
     else:
         print("Please specify a valid action: --create, --decode, or --list.")
+
 
 if __name__ == "__main__":
     main()
