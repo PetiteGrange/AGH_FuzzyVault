@@ -1,10 +1,9 @@
 from src.utils import *
-import nltk
-import textwrap
 from nltk.corpus import words
 import os
 from src.polynomial import *
 from src.points import *
+import json
 
 
 
@@ -36,10 +35,17 @@ def create_vault(vault_name, secret=None, length=20):
     # Generation of the genuine points
     genuine_points = generate_genuine_points(coefficients, features)
 
-    print("Genuine points: ", genuine_points)
+    genuine_x = [point[0] for point in genuine_points]
 
+    # Generation of the chaff points
+    chaff_points = generate_chaff_points(genuine_x, degree)
+
+    vault = genuine_points + chaff_points
+    random.shuffle(vault)
+
+    #TODO: revamp the saving system 
     with open(vault_path, 'w') as f:
-        f.write(secret_to_store)
+        f.write(vault)
     
     print(f"Vault '{vault_name}' created with secret of length {length}: {secret_to_store}")
 
