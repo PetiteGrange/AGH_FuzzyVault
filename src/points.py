@@ -28,12 +28,12 @@ def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int =
     chaff_points = [] 
 
     for i in range(points):
-        x_fake = random.randint(MinX, MaxX)
-        if x_fake not in genuine_x:
-            random_coefficients = [random.randint(1, 10) for _ in range(degree)]
-            y_fake = sum(c * (x_fake ** idx) for idx, c in enumerate(random_coefficients))  
-            chaff_points.append([x_fake, y_fake])
-        else:
-            i -= 1
+        while True:
+            x_fake = random.randint(MinX, MaxX)
+            if x_fake not in genuine_x:
+                random_coefficients = [random.randint(1, 10) for _ in range(degree)]
+                y_fake = sum(c * (x_fake ** idx) for idx, c in enumerate(random_coefficients))  
+                chaff_points.append([x_fake, y_fake])
+                break
     
     return chaff_points

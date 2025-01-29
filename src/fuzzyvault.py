@@ -42,6 +42,8 @@ def create_vault(vault_name, secret=None, length=20):
     vault = genuine_points + chaff_points
     random.shuffle(vault)
 
+    print(len(vault))
+
     # Saving the vault
     vault_path = os.path.join('vaults', vault_name)
     with open(vault_path, 'w') as f:
