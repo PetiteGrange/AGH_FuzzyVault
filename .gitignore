@@ -173,5 +173,6 @@ cython_debug/
 # Visual Studio Code
 .vscode/
 
-# Vaults
+# Vaults and features
 vaults/
+features/
