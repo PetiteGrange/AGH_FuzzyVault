@@ -1,9 +1,9 @@
 from src.utils import *
 from sympy import Symbol, interpolate
+from zlib import compress, decompress
 
 def generate_polynomial(secret: str, degree: int):
 
-    #TODO: revamp to be able to be decoded
 
     coefficients = []
 
@@ -11,17 +11,16 @@ def generate_polynomial(secret: str, degree: int):
     if not secret:
         raise ValueError("The secret cannot be empty")
     
+    compressed_secret = compress(secret.encode())
     
     chunk_size = len(secret) // degree + (len(secret) % degree > 0)
-    chunks = [secret[i:i + chunk_size] for i in range(0, len(secret), chunk_size)]
+    chunks = [compressed_secret[i:i + chunk_size] for i in range(0, len(compressed_secret), chunk_size)]
 
+    for chunk in chunks:
+        
+        # Convert the compressed string to bytes 
+        coef = int.from_bytes(chunk, byteorder='big')
 
-    for chunk_index, chunk in enumerate(chunks):
-        # Use SHA-256 to hash the word and convert to an integer
-        coef = hash_word(chunk, 10000)
-        #print(f"Coefficient {chunk_index} : {coef} from {chunk}")
-
-        # Append the coefficient to the list
         coefficients.append(coef) 
 
     return coefficients

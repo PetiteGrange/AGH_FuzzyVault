@@ -26,7 +26,7 @@ def create_vault(vault_name, secret=None, length=20):
     print("Degree: ", degree)
 
     # Generation of the features
-    #TODO: revamp the generation of features
+    #TODO: revamp the generation of features to not be dependant on the degree
     features = generate_features(degree)
 
     print("Features: ", features)
@@ -42,7 +42,7 @@ def create_vault(vault_name, secret=None, length=20):
     vault = genuine_points + chaff_points
     random.shuffle(vault)
 
-    print(len(vault))
+    print("Total number of points: ", len(vault))
 
     # Saving the vault
     vault_path = os.path.join('vaults', vault_name)
