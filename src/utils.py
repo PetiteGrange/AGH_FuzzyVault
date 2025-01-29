@@ -3,7 +3,7 @@ import hashlib
 import string
 from src import *
 
-def hash_word(word, mod=1000):
+def hash_word(word, mod=10000):
     """
     Convert a word into a numeric value using SHA-256 hashing.
     

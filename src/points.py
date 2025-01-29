@@ -23,7 +23,7 @@ def generate_genuine_points(coefficients: int, features: str, points: int = 20):
 
     return genuine_points
 
-def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int = 0, MaxX:int = 999):
+def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int = 0, MaxX:int = 9999):
 
     chaff_points = [] 
 

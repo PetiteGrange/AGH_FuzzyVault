@@ -11,14 +11,14 @@ def create_vault(vault_name, secret=None, length=20):
 
     # Make sure that the folder vaults exists
     if not os.path.exists('vaults'):
-        os.makedirs('vaults')
-
-    # Add the vault path
-    vault_path = os.path.join('vaults', vault_name)
+        os.makedirs('vaults')    
 
     # Generate the secret
     if secret: secret_to_store = secret
     else: secret_to_store = generate_secret(length)
+
+    # Actualizing the true length
+    length = len(secret_to_store)
 
     # Generate the polynomials coefficients
     degree = calculate_polynomial_degree(len(secret)) # degree of the polynomial
@@ -43,9 +43,15 @@ def create_vault(vault_name, secret=None, length=20):
     vault = genuine_points + chaff_points
     random.shuffle(vault)
 
-    #TODO: revamp the saving system 
+    # Saving the vault
+    vault_path = os.path.join('vaults', vault_name)
     with open(vault_path, 'w') as f:
-        f.write(vault)
+        json.dump(vault, f)
+
+    # Saving the features
+    features_path = os.path.join('features', vault_name + "_f")
+    with open(features_path, 'w') as f:
+        json.dump(features, f)
     
     print(f"Vault '{vault_name}' created with secret of length {length}: {secret_to_store}")
 
