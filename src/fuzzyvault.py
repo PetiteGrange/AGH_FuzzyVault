@@ -22,7 +22,7 @@ def create_vault(vault_name, secret=None, length=20):
     coefficients = generate_polynomial(secret_to_store, degree) #list of coefficients from 0 to last
 
     print("Coefficients: ", coefficients)
-    print("Degree: ", degree)
+    print("Degree: ", (degree - 1))
 
     # Generation of the features
     #TODO: revamp the generation of features to not be dependant on the degree

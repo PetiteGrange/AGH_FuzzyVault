@@ -15,7 +15,7 @@ def generate_polynomial(secret: str, degree: int):
     compressed_secret = compress(secret.encode())
     
     # We define the chunk size depending on the degree. It will result to 5 if the secret is short
-    chunk_size = len(secret) // degree + (len(secret) % degree > 0)
+    chunk_size = len(compressed_secret) // degree + (len(compressed_secret) % degree > 0)
 
     # Creation of a list of chunks to be encoded to bytes
     chunks = [compressed_secret[i:i + chunk_size] for i in range(0, len(compressed_secret), chunk_size)]
