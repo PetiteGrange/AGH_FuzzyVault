@@ -12,6 +12,8 @@ def generate_genuine_points(coefficients: int, features: str):
 
     genuine_points = []
 
+    #TODO: Un point en trop?
+
     # Generate more strings from the features
     splited_features = split_features(features)
 

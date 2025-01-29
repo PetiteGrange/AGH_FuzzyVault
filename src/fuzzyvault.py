@@ -80,8 +80,9 @@ def decode_vault(vault_name):
         print("Not enough genuine points detected! Cannot reconstruct the secret.")
         return None
     
+    coefficients = interpolation(genuine_points)
 
-    print(genuine_points)
+    print(coefficients)
 
 
 
