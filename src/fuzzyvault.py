@@ -3,7 +3,6 @@ import os
 from src.polynomial import *
 from src.points import *
 import json
-from sympy import Symbol, interpolate
 
 def create_vault(vault_name, secret=None, length=20):
 
@@ -34,22 +33,24 @@ def create_vault(vault_name, secret=None, length=20):
     # Generation of the genuine points
     genuine_points = generate_genuine_points(coefficients, features)
 
+    # Retrieve the x of the genuine points to avoid making a chaff point that is duplicate
     genuine_x = [point[0] for point in genuine_points]
 
     # Generation of the chaff points
     chaff_points = generate_chaff_points(genuine_x, degree, 30*len(features))
 
+    # Create and shuffle the final list of points to obtain the vault
     vault = genuine_points + chaff_points
     random.shuffle(vault)
 
     print("Total number of points: ", len(vault))
 
-    # Saving the vault
+    # Saving the vault in vault/
     vault_path = os.path.join('vaults', vault_name)
     with open(vault_path, 'w') as f:
         json.dump(vault, f)
 
-    # Saving the features
+    # Saving the features in features/
     features_path = os.path.join('features', vault_name + "_f")
     with open(features_path, 'w') as f:
         json.dump(features, f)
@@ -74,16 +75,22 @@ def decode_vault(vault_name):
     # Retrieve the features from the user
     features_hash = retrieve_features()
 
+    # Search the correponding points inside the vault
     genuine_points = retrieve_genuine_points(vault, features_hash)
 
+    
     if len(genuine_points) < len(features_hash):  # Need enough points to interpolate
         print("Not enough genuine points detected! Cannot reconstruct the secret.")
         return None
     
+    #Retrive the coefficients using LaGrange interpolation
     coefficients = interpolation(genuine_points)
     #TODO: add error correction like Reed-Solomon
 
-    print(coefficients)
+    # Convert the coefficients to printable string
+    secret = retrieve_secret(coefficients)
+
+    print (f"The secret is:\n{secret}")
 
 
 
@@ -94,6 +101,7 @@ def list_vaults():
     if not os.path.exists('vaults'):
         os.makedirs('vaults')
 
+    # Retrieve all the files inside vaults/
     vault_files = [f for f in os.listdir('vaults') if os.path.isfile(os.path.join('vaults', f))]
     
     if vault_files:

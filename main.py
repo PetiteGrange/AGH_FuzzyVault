@@ -1,7 +1,3 @@
-import random
-import string
-import nltk
-from nltk.corpus import words
 from src.fuzzyvault import *
 import argparse
 

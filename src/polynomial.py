@@ -11,9 +11,13 @@ def generate_polynomial(secret: str, degree: int):
     if not secret:
         raise ValueError("The secret cannot be empty")
     
+    # Compression of the secret
     compressed_secret = compress(secret.encode())
     
+    # We define the chunk size depending on the degree. It will result to 5 if the secret is short
     chunk_size = len(secret) // degree + (len(secret) % degree > 0)
+
+    # Creation of a list of chunks to be encoded to bytes
     chunks = [compressed_secret[i:i + chunk_size] for i in range(0, len(compressed_secret), chunk_size)]
 
     for chunk in chunks:
@@ -50,7 +54,23 @@ def interpolation(points):
     # Interpolating polynomial
     polynomial = interpolate(list(zip(x_values, y_values)), x)
 
-    # Extract the coefficients from the polynomial
-    coefficients = [polynomial.coeff(x, i) for i in range(polynomial.as_poly().degree() + 1)]   
+    # Exporting the coefficients to integer
+    coefficients = [int(polynomial.coeff(x, i)) for i in range(polynomial.as_poly().degree() + 1)]
 
     return coefficients
+
+
+def retrieve_secret(coefficients:int):
+
+    compressed_secret = bytearray() 
+
+    for coeff in coefficients:
+        # Convert each coefficient integer to bytes and you add it to compressed_secret
+        num_bytes = (coeff.bit_length() + 7) // 8
+        coeff_bytes = coeff.to_bytes(num_bytes, byteorder='big')
+        compressed_secret.extend(coeff_bytes)
+    
+    # Inflate the bytes to obtain the plain text secret
+    secret = decompress(compressed_secret).decode()
+
+    return secret

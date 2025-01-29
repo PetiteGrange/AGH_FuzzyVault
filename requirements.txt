@@ -4,5 +4,4 @@ random
 string
 os
 json
-sympy
 zlib

@@ -49,11 +49,16 @@ def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int =
     chaff_points = [] 
 
     for i in range(points):
+
         while True:
+            # Generate a random x coordinate for the chaff point
             x_fake = random.randint(MinX, MaxX)
+
+            # If it it not in the genuine points, we generate its y based on random coefficients, else we loop arround to generate another x
             if x_fake not in genuine_x:
                 random_coefficients = [random.randint(1, 10) for _ in range(degree)]
                 y_fake = sum(c * (x_fake ** idx) for idx, c in enumerate(random_coefficients))  
+
                 chaff_points.append([x_fake, y_fake])
                 break
     
