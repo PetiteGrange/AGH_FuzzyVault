@@ -48,3 +48,41 @@ def generate_secret(length=20):
 
     characters = string.ascii_letters + string.digits + string.punctuation
     return ''.join(random.choice(characters) for _ in range(length))
+
+
+def calculate_polynomial_degree(secret_length):
+    """
+    Calculate the degree of the polynomials
+
+    Args:
+        secret_length (int): The length of the secret=
+    
+    Returns:
+        int: the degree of the polynomial
+    
+    """
+    # Set a reasonable maximum degree to prevent PC explosion
+    min_degree = 3
+    max_degree = 10
+    degree = min(max_degree, max(min_degree, secret_length // 5))
+    return degree
+
+
+def generate_features(degree):
+    """
+    Generate a certain amount of words for the features according to the degree if the polynomial
+
+    Args:
+        degree (int): the degree of the polynomial
+    
+    Returns:
+        [str]: the features
+    
+    """
+    word_list = words.words()
+    
+    # Select `degree` number of random words
+    selected_words = random.sample(word_list, degree)
+    print (selected_words)
+    
+    return selected_words

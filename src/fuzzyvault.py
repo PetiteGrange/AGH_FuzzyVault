@@ -20,11 +20,17 @@ def create_vault(vault_name, secret=None, length=20):
     if secret: secret_to_store = secret
     else: secret_to_store = generate_secret(length)
 
+    # Generate the polynomials coefficients
+    degree = calculate_polynomial_degree(len(secret))
+    coefficients = generate_polynomial(secret, degree)
+
+    #TODO: generate features
 
     with open(vault_path, 'w') as f:
         f.write(secret_to_store)
     
     print(f"Vault '{vault_name}' created with secret of length {length}: {secret_to_store}")
+
 
 
 # Function to decode an existing vault
@@ -38,7 +44,7 @@ def decode_vault(vault_name):
     
     print(f"Decoded secret from vault '{vault_name}': {secret}")
 
-        
+
 
 def list_vaults():
 
