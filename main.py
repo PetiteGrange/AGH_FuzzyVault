@@ -1,4 +1,4 @@
-from scr.fuzzyvault import *
+from src.fuzzyvault import *
 
 if __name__ == "__main__":
     # Create a new instance of the FuzzyVault class

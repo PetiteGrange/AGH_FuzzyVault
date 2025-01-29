@@ -1,9 +1,9 @@
-from scr.utils import *
+from src.utils import *
 import nltk
 import textwrap
 from nltk.corpus import words
 
-from scr.polynomial import *
+from src.polynomial import *
 
 
 
