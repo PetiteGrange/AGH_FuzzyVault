@@ -4,23 +4,23 @@ from src.utils import *
 
 def generate_genuine_points(coefficients: int, features: str):
     """
-    Generates genuine points
-    
+    Generates genuine points containing the data
+
+    Returns:
+        [int, int]: coordinates of genuine points    
     """
 
     assert len(coefficients) > 0, "Secret coefficients must not be empty."
 
     genuine_points = []
 
-    #TODO: Un point en trop?
+    #BUG: Un point en trop?
 
     # Generate more strings from the features
     splited_features = split_features(features)
 
     # Merge features and splited features to add more points
     features_redundancy = features + splited_features
-
-    print(features_redundancy)
 
     for feature in features_redundancy:
         # Hash the word to get a feature value (x-coordinate)
@@ -32,12 +32,19 @@ def generate_genuine_points(coefficients: int, features: str):
 
             genuine_points.append([x, y])
 
-        else: print("already present")
-
 
     return genuine_points
 
+
 def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int = 0, MaxX:int = 9999):
+    """
+    Function to generate the chaff points to confuse an attacker
+
+
+    Returns:
+        [int, int]: coordinates of chaff points
+    
+    """
 
     chaff_points = [] 
 
@@ -52,23 +59,22 @@ def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int =
     
     return chaff_points
 
-
+# Function to recover the genuine points using the entered featured by the user
 def retrieve_genuine_points(vault: int, features: string):
 
     points_x = []
 
+    # Add the splited features like during the generation to include more points
     splited_features = split_features(features)
-
     features_redundancy = splited_features + features
 
-    print(features_redundancy)
-
+    # hash the features
     for feature in features_redundancy:
         # Hash the word to get a feature value (x-coordinate)
         x = hash_word(feature)
         
         points_x.append(x)
 
-
+    # get all genuine points corresponding to the features
     genuine_points = [point for point in vault if point[0] in points_x]
     return genuine_points

@@ -19,19 +19,19 @@ def create_vault(vault_name, secret=None, length=20):
     length = len(secret_to_store)
 
     # Generate the polynomials coefficients
-    degree = calculate_polynomial_degree(len(secret)) # degree of the polynomial
-    coefficients = generate_polynomial(secret, degree) #list of coefficients from 0 to last
+    degree = calculate_polynomial_degree(len(secret_to_store)) # degree of the polynomial
+    coefficients = generate_polynomial(secret_to_store, degree) #list of coefficients from 0 to last
 
     print("Coefficients: ", coefficients)
     print("Degree: ", degree)
 
     # Generation of the features
+    #TODO: revamp the generation of features
     features = generate_features(degree)
 
     print("Features: ", features)
 
     # Generation of the genuine points
-    #TODO: add dynamic points numbers
     genuine_points = generate_genuine_points(coefficients, features)
 
     genuine_x = [point[0] for point in genuine_points]
@@ -81,6 +81,7 @@ def decode_vault(vault_name):
         return None
     
     coefficients = interpolation(genuine_points)
+    #TODO: add error correction like Reed-Solomon
 
     print(coefficients)
 

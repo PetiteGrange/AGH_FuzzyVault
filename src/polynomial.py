@@ -3,6 +3,8 @@ from sympy import Symbol, interpolate
 
 def generate_polynomial(secret: str, degree: int):
 
+    #TODO: revamp to be able to be decoded
+
     coefficients = []
 
     # If for some reason the secret is empty
