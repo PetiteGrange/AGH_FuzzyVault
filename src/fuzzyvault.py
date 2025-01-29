@@ -3,8 +3,7 @@ import os
 from src.polynomial import *
 from src.points import *
 import json
-
-
+from sympy import Symbol, interpolate
 
 def create_vault(vault_name, secret=None, length=20):
 
@@ -32,12 +31,13 @@ def create_vault(vault_name, secret=None, length=20):
     print("Features: ", features)
 
     # Generation of the genuine points
-    genuine_points = generate_genuine_points(coefficients, features)
+    #TODO: add dynamic points numbers
+    genuine_points = generate_genuine_points(coefficients, features, degree*2)
 
     genuine_x = [point[0] for point in genuine_points]
 
     # Generation of the chaff points
-    chaff_points = generate_chaff_points(genuine_x, degree)
+    chaff_points = generate_chaff_points(genuine_x, degree, degree*20)
 
     vault = genuine_points + chaff_points
     random.shuffle(vault)
@@ -60,17 +60,32 @@ def create_vault(vault_name, secret=None, length=20):
 
 # Function to decode an existing vault
 def decode_vault(vault_name):
-    if not os.path.exists(vault_name):
+
+    # Make sure that the asked vault exist
+    vault_path = os.path.join('vaults', vault_name)
+    if not os.path.exists(vault_path):
         print(f"Vault '{vault_name}' does not exist.")
         return
     
-    with open(vault_name, 'r') as f:
-        secret = f.read().strip()
+    # Load the vault from the file
+    with open(vault_path, 'r') as f:
+        vault = json.load(f)
+
+    # Retrieve the features from the user
+    features_hash = retrieve_features()
+
+    genuine_points = retrieve_genuine_points(vault, features_hash)
+
+    if len(genuine_points) < len(features_hash):  # Need enough points to interpolate
+        print("Not enough genuine points detected! Cannot reconstruct the secret.")
+        return None
     
-    print(f"Decoded secret from vault '{vault_name}': {secret}")
+
+    print(genuine_points)
 
 
 
+# Function to list all existing vault
 def list_vaults():
 
     # Make sure that the folder vaults exists

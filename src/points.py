@@ -37,3 +37,8 @@ def generate_chaff_points(genuine_x:int, degree:int,points:int = 200, MinX:int =
                 break
     
     return chaff_points
+
+
+def retrieve_genuine_points(vault: int, genuine_x: int):
+    genuine_points = [point for point in vault if point[0] in genuine_x]
+    return genuine_points

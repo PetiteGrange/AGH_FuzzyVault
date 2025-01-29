@@ -70,3 +70,14 @@ def generate_features(degree):
     selected_words = random.sample(word_list, degree)
     
     return selected_words
+
+def retrieve_features():
+    features = []
+    for i in range(10):
+        word = input(f"Please enter the word {i+1} from your features (or press Enter to stop): ")
+        if not word:
+            break
+        hashed_word = hash_word(word)
+        features.append(hashed_word)
+    
+    return features
